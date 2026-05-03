@@ -1,0 +1,30 @@
+# Generated outputs land here
+#
+# Running the seven scripts in order produces:
+#
+#   01_build_indices.py     -> dataset_A_with_AEI.csv
+#                              dataset_B_with_indices.csv
+#                              index_construction_log.txt
+#
+#   02_descriptives.py      -> table_1_dataset_B_grade.csv
+#                              table_2-5_app_summary.csv
+#                              table_8_motives.csv
+#                              table_9-10_top_apps.csv
+#                              table_11_indices_summary.csv
+#                              table_12-13_internet_quality.csv
+#                              table_indices_correlations.csv
+#
+#   03_regressions.py       -> table_model_7_1.csv
+#                              table_model_7_2.csv
+#
+#   04_clusters.py          -> table_E1_cluster_profiles.csv
+#                              cluster_assignment.csv
+#
+#   05_sensitivity_pca.py   -> yscr_sensitivity_correlations.csv
+#                              yscr_sensitivity_variants.csv
+#
+#   06_bootstrap_ci.py      -> bootstrap_ci.csv
+#
+#   07_cfa.py               -> cfa_results.txt
+#
+# All outputs are deterministic given SEED = 42.

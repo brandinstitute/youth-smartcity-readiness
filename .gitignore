@@ -1,0 +1,24 @@
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+
+# Generated outputs (recreated by scripts)
+results/*.png
+results/*.csv
+results/*.json
+results/*.txt
+
+# Source survey data — kept locally, not committed
+data/results-survey*.csv
+data/people-smart-cities*.xlsx
+
+# IDE settings
+.vscode/
+.idea/
+*.swp

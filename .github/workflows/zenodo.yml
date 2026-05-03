@@ -1,0 +1,21 @@
+name: Release to Zenodo
+
+# This workflow is triggered when a GitHub Release is published.
+# Zenodo's GitHub integration will then archive the tagged commit
+# and assign a persistent DOI. To enable, link the repository to
+# Zenodo at https://zenodo.org/account/settings/github/ before
+# publishing the first Release.
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print confirmation
+        run: |
+          echo "Release ${{ github.event.release.tag_name }} published."
+          echo "Zenodo will archive this commit and assign a DOI within a few minutes."
+          echo "DOI badge: https://zenodo.org/badge/latestdoi/<repo-id>"

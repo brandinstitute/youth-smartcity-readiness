@@ -1,0 +1,10 @@
+# Place source surveys here
+#
+# Required files:
+#   - results-survey777777__2_.csv
+#   - results-survey971496.csv
+#   - people-smart-cities-indikatory-slovensko.xlsx
+#
+# These files are NOT committed to the repository (see .gitignore).
+# They are available on request from the corresponding author for
+# academic replication, subject to a data-use agreement.
