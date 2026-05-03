@@ -31,6 +31,11 @@ def minmax(x: pd.Series) -> pd.Series:
 
 
 def to_int_dev(x):
+    """Parse self-reported device counts from free-text answers.
+    Values above 30 are treated as data-entry errors / non-serious responses
+    (winsorisation: a real teenage household rarely owns >30 internet devices
+    of one category) and dropped to NaN. Affected cases: <5 in current data.
+    """
     if pd.isna(x):
         return np.nan
     m = re.search(r"\d+", str(x))
@@ -64,6 +69,10 @@ def build_dataset_A() -> pd.DataFrame:
     ss["used"] = pd.to_numeric(ss["apps_used"], errors="coerce")
     ss["use_ratio"] = ss["used"] / ss["inst"]
 
+    # AEI components: daily app time, app portfolio size (installed), recency of last install.
+    # The portfolio-size proxy is `apps_installed` (POCETAPLIK), reproducing the values
+    # reported in Tables 7-8 of the monograph. `apps_used` is retained as a descriptive
+    # variable (Table 5) and powers the use_ratio above; it is NOT an AEI input.
     ss["c_time"] = minmax(ss["time_h"])
     ss["c_inst"] = minmax(ss["inst"])
     ss["c_recency"] = minmax(ss["last_n"])
@@ -147,13 +156,20 @@ def build_dataset_B() -> pd.DataFrame:
         v["Z_" + c] = zscore(v[c])
     v["CSA"] = minmax(v[["Z_csa_school", "Z_csa_role", "Z_csa_imp", "Z_csa_local"]].mean(axis=1))
 
+    # YSCR: weighted composite of CSA, SDR, DAE. Two variants are computed.
+    # Default (published Table 12 values): missing SDR/DAE replaced by their column mean
+    # before applying weights. This keeps YSCR valid N = 368 (= valid CSA cases) at the
+    # cost of light mean-imputation on at most ~13% of cases for SDR/DAE.
+    # Listwise variant ("YSCR_listwise") is provided as a sensitivity check; it drops
+    # any case missing CSA, SDR or DAE (~321 valid cases) and is referenced in §4.4.5.
     v["YSCR"] = (0.5 * v["CSA"]
                  + 0.3 * v["SDR"].fillna(v["SDR"].mean())
                  + 0.2 * v["DAE"].fillna(v["DAE"].mean()))
+    v["YSCR_listwise"] = 0.5 * v["CSA"] + 0.3 * v["SDR"] + 0.2 * v["DAE"]
 
     out_cols = ["grade_int", "gender", "q_home_n", "q_school_n", "q_equip_n",
                 "dev_total", "DAE", "SDR", "csa_school", "csa_role", "csa_imp",
-                "csa_local", "CSA", "YSCR"]
+                "csa_local", "CSA", "YSCR", "YSCR_listwise"]
     return v[out_cols].reset_index(drop=True)
 
 
@@ -166,5 +182,8 @@ if __name__ == "__main__":
     print(f"  AEI mean = {a['AEI'].mean():.2f}, SD = {a['AEI'].std():.2f}")
     print(f"Dataset B: N = {len(b)}, YSCR valid N = {b['YSCR'].notna().sum()}")
     print(f"  DAE mean = {b['DAE'].mean():.2f}, SDR = {b['SDR'].mean():.2f}, "
-          f"CSA = {b['CSA'].mean():.2f}, YSCR = {b['YSCR'].mean():.2f}")
+          f"CSA = {b['CSA'].mean():.2f}, YSCR (default w/ mean-impute) = {b['YSCR'].mean():.2f}")
+    yl = b['YSCR_listwise'].dropna()
+    print(f"  YSCR (listwise sensitivity) N = {len(yl)}, mean = {yl.mean():.2f}, "
+          f"corr with default = {b[['YSCR', 'YSCR_listwise']].corr().iloc[0, 1]:.3f}")
     print("Saved to data/dataset_A_indices.csv and data/dataset_B_indices.csv")

@@ -1,0 +1,4 @@
+,YSCR_default,YSCR_equal,YSCR_pca
+YSCR_default,1.0,0.968,0.972
+YSCR_equal,0.968,1.0,0.996
+YSCR_pca,0.972,0.996,1.0

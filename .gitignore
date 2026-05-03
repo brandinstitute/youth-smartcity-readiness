@@ -17,6 +17,13 @@ results/*.txt
 # Source survey data — kept locally, not committed
 data/results-survey*.csv
 data/people-smart-cities*.xlsx
+data/dataset_A_indices.csv
+data/dataset_B_indices.csv
+
+# Aggregates ARE committed; explicit allow rule (in case any pattern above
+# accidentally matches a future filename inside aggregates/).
+!data/aggregates/
+!data/aggregates/**
 
 # IDE settings
 .vscode/

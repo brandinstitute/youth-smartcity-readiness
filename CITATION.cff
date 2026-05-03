@@ -1,18 +1,26 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
+message: "If you use this code, please cite it as below."
 title: "Youth Smart-City Readiness — replication package"
-type: software
-version: 1.0.0
-date-released: 2026-05-03
-license: MIT
-repository-code: "https://github.com/brandinstitute/youth-smartcity-readiness"
 authors:
   - family-names: "Kóňa"
     given-names: "Andrej"
     affiliation: "University of Ss. Cyril and Methodius in Trnava, Faculty of Social Sciences"
+    orcid: "https://orcid.org/0000-0002-6028-1452"
   - family-names: "Cagáňová"
     given-names: "Dagmar"
     affiliation: "Newton University, Prague"
+    orcid: "https://orcid.org/0000-0002-6834-6126"
+version: 1.0.0
+date-released: "2026-05-03"
+license: MIT
+repository-code: "https://github.com/brandinstitute/youth-smartcity-readiness"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.20011752"
+    description: "Zenodo archive of v1.0.0 (this version)"
+  - type: doi
+    value: "10.5281/zenodo.20011751"
+    description: "Concept DOI (always points to the latest version)"
 keywords:
   - smart-city readiness
   - digital citizenship
@@ -20,3 +28,16 @@ keywords:
   - youth smart-city literacy
   - composite indicators
   - Slovakia
+preferred-citation:
+  type: book
+  title: "Digital Habits and Smart-City Readiness of Secondary-School Students: Bridging Mobile Ecosystems and Civic Digital Literacy"
+  authors:
+    - family-names: "Kóňa"
+      given-names: "Andrej"
+      orcid: "https://orcid.org/0000-0002-6028-1452"
+    - family-names: "Cagáňová"
+      given-names: "Dagmar"
+      orcid: "https://orcid.org/0000-0002-6834-6126"
+  year: 2026
+  publisher:
+    name: "Springer Nature / EAI Publishing"

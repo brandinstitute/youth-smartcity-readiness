@@ -7,12 +7,12 @@ This guide takes a fresh machine to a working replication environment in about t
 ## A. Local pipeline — Windows (PowerShell)
 
 ```powershell
-cd C:\Users\andre\OneDrive\SKOLA\publikacie\Monografia2\v2\youth-smartcity-readiness
+cd <path\to\your\clone>\youth-smartcity-readiness
 
 # Copy the three source files into ./data/
-Copy-Item "C:\path\to\results-survey777777 (2).csv"    -Destination ".\data\"
-Copy-Item "C:\path\to\results-survey971496.csv"        -Destination ".\data\"
-Copy-Item "C:\path\to\people-smart-cities-indikatory-slovensko.xlsx" -Destination ".\data\"
+Copy-Item "<path\to>\results-survey777777 (2).csv"    -Destination ".\data\"
+Copy-Item "<path\to>\results-survey971496.csv"        -Destination ".\data\"
+Copy-Item "<path\to>\people-smart-cities-indikatory-slovensko.xlsx" -Destination ".\data\"
 
 # Python environment
 py -m venv .venv

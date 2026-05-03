@@ -19,8 +19,10 @@ Scripts that reproduce every empirical figure, table and index reported in Chapt
 | `scripts/05_sensitivity_pca.py` | YSCR robustness check across default, equal and PCA-based weights |
 | `scripts/06_bootstrap_ci.py` | 95 % bootstrap confidence intervals for all index means |
 | `scripts/07_cfa.py` | Confirmatory factor analysis on the SDR and CSA item batteries (semopy) |
-| `data/.gitkeep` | Place source surveys here (not committed — see `data/README.md`) |
-| `results/.gitkeep` | Generated outputs land here |
+| `scripts/08_export_aggregates.py` | Writes the anonymised CSV companions to `data/aggregates/` (CC BY 4.0) |
+| `data/README.md` | How to obtain the raw surveys (kept locally, not committed) |
+| `data/aggregates/` | Public, citable aggregate CSVs that mirror the published tables (CC BY 4.0) |
+| `results/.gitkeep` | Generated tables and figures land here (gitignored) |
 | `docs/codebook.md` | Variable-by-variable codebook for both surveys |
 | `docs/foreword_request_email.md` | Template e-mail for inviting an external author of the foreword |
 
@@ -28,13 +30,14 @@ Scripts that reproduce every empirical figure, table and index reported in Chapt
 
 ```
 .
-├── data/                          # source surveys (not committed)
-│   ├── results-survey777777__2_.csv
-│   ├── results-survey971496.csv
-│   └── people-smart-cities-indikatory-slovensko.xlsx
-├── scripts/                       # Python analysis scripts (7 files)
-├── notebooks/                     # exploratory notebooks (optional)
-├── results/                       # generated tables and figures
+├── data/
+│   ├── README.md                  # how to obtain raw surveys (raw files are gitignored)
+│   └── aggregates/                # CC BY 4.0 — anonymised companion CSVs
+│       ├── README.md
+│       ├── LICENSE-CC-BY-4.0.md
+│       └── *.csv (14 files: descriptives, correlations, clusters, bootstrap, sensitivity, municipal)
+├── scripts/                       # Python analysis scripts (8 files)
+├── results/                       # generated tables and figures (gitignored)
 ├── docs/
 │   ├── codebook.md
 │   └── foreword_request_email.md
@@ -72,6 +75,7 @@ python scripts/04_clusters.py
 python scripts/05_sensitivity_pca.py
 python scripts/06_bootstrap_ci.py
 python scripts/07_cfa.py
+python scripts/08_export_aggregates.py   # rebuilds data/aggregates/
 ```
 
 All outputs land in `./results/` as `.csv`, `.json` and `.txt` files keyed to the table or section they support in the monograph.
@@ -108,9 +112,8 @@ This package is versioned with [Semantic Versioning](https://semver.org/). A per
 
 ## Licence
 
-- **Code** (`scripts/`, `notebooks/`): MIT License (see `LICENSE`).
-- **Documentation and metadata** (`docs/`, `README.md`, `CITATION.cff`): Creative Commons Attribution 4.0 International (CC BY 4.0).
-- **Aggregated, anonymised data** (if released): Creative Commons Attribution 4.0 International (CC BY 4.0).
+- **Code and documentation** (`scripts/`, `docs/`, `README.md`, `SETUP.md`, `CITATION.cff`, the root `LICENSE`): MIT License — see `LICENSE`.
+- **Aggregated, anonymised data** in `data/aggregates/`: Creative Commons Attribution 4.0 International (CC BY 4.0). The licence text is in `data/aggregates/LICENSE-CC-BY-4.0.md`. The aggregates are sample-level summaries derived from the original surveys; no individual-level rows are released.
 
 ## Contact
 
