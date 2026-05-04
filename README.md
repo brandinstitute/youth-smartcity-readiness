@@ -20,9 +20,14 @@ Scripts that reproduce every empirical figure, table and index reported in Chapt
 | `scripts/06_bootstrap_ci.py` | 95 % bootstrap confidence intervals for all index means |
 | `scripts/07_cfa.py` | Confirmatory factor analysis on the SDR and CSA item batteries (semopy) |
 | `scripts/08_export_aggregates.py` | Writes the anonymised CSV companions to `data/aggregates/` (CC BY 4.0) |
+| `scripts/09_parse_lss.py` | Parses LimeSurvey `.lss` exports into the Slovak Markdown source for Appendix A |
+| `scripts/10_insert_appendix_a.py` | Embeds the Appendix-A markdown into the monograph (`.docx`) with proper headings |
+| `scripts/11_fill_appendices.py` | Fills Appendices B/C/D/E with native Word tables sourced from `data/aggregates/` |
+| `scripts/12_make_figures.py` | Renders Figure 1 (conceptual model) and Figure 2 (4-panel histograms) as PNG |
+| `scripts/13_fix_monografia.py` | One-off recovery script — fixes "delete-only" edits left in an earlier draft |
 | `data/README.md` | How to obtain the raw surveys (kept locally, not committed) |
 | `data/aggregates/` | Public, citable aggregate CSVs that mirror the published tables (CC BY 4.0) |
-| `results/.gitkeep` | Generated tables and figures land here (gitignored) |
+| `results/.gitkeep` | Generated tables, figures and patched .docx files land here (gitignored) |
 | `docs/codebook.md` | Variable-by-variable codebook for both surveys |
 | `docs/foreword_request_email.md` | Template e-mail for inviting an external author of the foreword |
 
@@ -36,8 +41,8 @@ Scripts that reproduce every empirical figure, table and index reported in Chapt
 │       ├── README.md
 │       ├── LICENSE-CC-BY-4.0.md
 │       └── *.csv (14 files: descriptives, correlations, clusters, bootstrap, sensitivity, municipal)
-├── scripts/                       # Python analysis scripts (8 files)
-├── results/                       # generated tables and figures (gitignored)
+├── scripts/                       # Python analysis & monograph-build scripts (13 files)
+├── results/                       # generated tables, figures and patched .docx files (gitignored)
 ├── docs/
 │   ├── codebook.md
 │   └── foreword_request_email.md
@@ -62,12 +67,17 @@ python -m venv .venv
 # source .venv/bin/activate     # macOS / Linux
 pip install -r requirements.txt
 
-# 3. Place the three source files into ./data/
-#    - results-survey777777__2_.csv      (Dataset A — mobile habits)
-#    - results-survey971496.csv          (Dataset B — smart-city perception)
-#    - people-smart-cities-indikatory-slovensko.xlsx  (Slovak indicators)
+# 3. Place the source files into ./data/
+#    Required for the analytic pipeline (steps 01–08):
+#      - results-survey777777 (2).csv         (Dataset A — mobile habits)
+#      - results-survey971496.csv             (Dataset B — smart-city perception)
+#      - people-smart-cities-indikatory-slovensko.xlsx  (Slovak indicators)
+#    Optional for the monograph-build pipeline (steps 09–13):
+#      - limesurvey_survey_777777.lss         (Dataset A questionnaire export, for Appendix A)
+#      - limesurvey_survey_971496.lss         (Dataset B questionnaire export, for Appendix A)
+#      - monograph_in.docx                    (current draft of the manuscript)
 
-# 4. Run the full pipeline
+# 4. Analytic pipeline
 python scripts/01_build_indices.py
 python scripts/02_descriptives.py
 python scripts/03_regressions.py
@@ -76,6 +86,13 @@ python scripts/05_sensitivity_pca.py
 python scripts/06_bootstrap_ci.py
 python scripts/07_cfa.py
 python scripts/08_export_aggregates.py   # rebuilds data/aggregates/
+
+# 5. Optional: monograph-build pipeline (regenerate Appendices and figures)
+python scripts/09_parse_lss.py            # → results/Appendix_A_Dataset_*.md
+python scripts/10_insert_appendix_a.py    # → results/monograph_with_appendix_a.docx
+python scripts/11_fill_appendices.py      # → results/monograph_with_appendices.docx
+python scripts/12_make_figures.py         # → results/Figure_1_*.png, Figure_2_*.png
+# python scripts/13_fix_monografia.py     # one-off recovery script — read first
 ```
 
 All outputs land in `./results/` as `.csv`, `.json` and `.txt` files keyed to the table or section they support in the monograph.

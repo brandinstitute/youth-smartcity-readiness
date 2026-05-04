@@ -13,10 +13,14 @@ results/*.png
 results/*.csv
 results/*.json
 results/*.txt
+results/*.md
+results/*.docx
 
 # Source survey data — kept locally, not committed
 data/results-survey*.csv
 data/people-smart-cities*.xlsx
+data/limesurvey_survey_*.lss
+data/monograph_in.docx
 data/dataset_A_indices.csv
 data/dataset_B_indices.csv
 
